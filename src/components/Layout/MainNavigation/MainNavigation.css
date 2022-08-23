@@ -1,0 +1,24 @@
+div.nav {
+    background-color: #2C3333;
+    color: #fff;
+    padding: 15px 0px;
+}
+
+.nav ul {
+    list-style: none;
+}
+
+ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.list-items {
+    text-decoration: none;
+    color: #fff;
+}
+
+.active-item {
+    color: #A5C9CA;
+}
