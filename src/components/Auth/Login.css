@@ -1,0 +1,26 @@
+.login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login_form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 15px;
+    margin: 8px 0px;
+}
+
+.login_form input {
+    padding: 5px 10px;
+    border: 1px solid #e1e1e1;
+    border-radius: 12px;
+}
+
+.login h4 span {
+    color: #313131;
+}

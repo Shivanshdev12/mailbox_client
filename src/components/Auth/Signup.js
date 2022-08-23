@@ -1,4 +1,5 @@
 import { Fragment, useRef } from "react";
+import { useHistory } from "react-router-dom";
 import Button from "../UI/Button";
 import "./Signup.css";
 
@@ -7,6 +8,7 @@ const Signup = () => {
     const email = useRef();
     const password = useRef();
     const confirmPassword = useRef();
+    const history = useHistory();
     const submitHandler = (e) => {
         e.preventDefault();
         const enteredEmail = email.current.value;
@@ -28,6 +30,7 @@ const Signup = () => {
             }).then((data) => {
                 localStorage.setItem("token", data.idToken);
                 console.log("USER LOGGED IN!");
+                history.replace("/home");
             })
         }
         else {
@@ -46,7 +49,7 @@ const Signup = () => {
                 <input id="confirm" name="confirm" type="password" ref={confirmPassword} required />
                 <Button className="btn-auth">SignUp</Button>
             </form>
-            <h4>Already have an account ? Login</h4>
+            <p><span>Already have an account ? Login</span></p>
         </div>
     </Fragment>
 }

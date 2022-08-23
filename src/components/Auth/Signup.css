@@ -7,6 +7,10 @@ div.signup {
     height: 100vh;
 }
 
+.signup span {
+    color: #313131;
+}
+
 .signup_form {
     display: flex;
     flex-direction: column;
