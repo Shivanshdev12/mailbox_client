@@ -25,6 +25,7 @@ const Login = () => {
             return res.json();
         }).then((data) => {
             localStorage.setItem("token", data.idToken);
+            localStorage.setItem("email", enteredEmail);
             console.log("USER LOGGED IN!");
             history.push("/home");
             window.location.reload();

@@ -29,6 +29,7 @@ const Signup = () => {
                 return res.json();
             }).then((data) => {
                 localStorage.setItem("token", data.idToken);
+                localStorage.setItem("email", enteredEmail);
                 history.push("/home");
                 window.location.reload();
                 console.log("USER LOGGED IN!");
