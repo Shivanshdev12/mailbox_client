@@ -1,6 +1,7 @@
 import Layout from "./components/Layout/Layout";
 import Signup from "./components/Auth/Signup";
 import Login from "./components/Auth/Login";
+import Home from "./components/screens/Home";
 import { Switch, Route, Redirect } from "react-router-dom";
 
 function App() {
@@ -13,6 +14,10 @@ function App() {
         </Route>
         {isToken === null && <Route path="/signup" exact><Signup /></Route>}
         {isToken === null && <Route path="/login" exact><Login /></Route>}
+        {isToken !== null && <Route path="/home" exact><Home /></Route>}
+        {<Route path="*">
+          <Redirect to="/login" />
+        </Route>}
       </Switch>
     </Layout>
   );

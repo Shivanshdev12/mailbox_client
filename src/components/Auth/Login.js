@@ -26,14 +26,15 @@ const Login = () => {
         }).then((data) => {
             localStorage.setItem("token", data.idToken);
             console.log("USER LOGGED IN!");
-            history.replace("/home");
+            history.push("/home");
+            window.location.reload();
         }).catch((err) => {
             window.alert(err.message);
         })
     }
     return (
         <div className="login">
-            <h2>Login here:</h2>
+            <h3>Login here</h3>
             <form onSubmit={submitHandler} className="login_form">
                 <label htmlFor="Email">Email:</label>
                 <input id="Email" name="Email" type="email" ref={email} required />

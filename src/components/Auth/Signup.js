@@ -29,8 +29,9 @@ const Signup = () => {
                 return res.json();
             }).then((data) => {
                 localStorage.setItem("token", data.idToken);
+                history.push("/home");
+                window.location.reload();
                 console.log("USER LOGGED IN!");
-                history.replace("/home");
             })
         }
         else {
@@ -39,7 +40,7 @@ const Signup = () => {
     }
     return <Fragment>
         <div className="signup">
-            <h2>New User ? Sign up</h2>
+            <h3>New User ? Sign up</h3>
             <form onSubmit={submitHandler} className="signup_form">
                 <label htmlFor="Email">Email:</label>
                 <input id="Email" name="Email" type="email" ref={email} required />
