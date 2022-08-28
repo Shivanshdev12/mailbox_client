@@ -3,8 +3,8 @@ import { useRef } from "react";
 import Button from "../UI/Button";
 import "./Home.css";
 
-const Home = () => {
-    let username = localStorage.getItem("email") || " ";
+function getUsername(user) {
+    let username = user || " ";
     let t = "";
     for (let i = 0; i < username.length; i++) {
         if (username[i] === '.' || username[i] === '@') {
@@ -14,7 +14,12 @@ const Home = () => {
             t += username[i];
         }
     }
-    username = t;
+    return t;
+}
+
+const Home = () => {
+    const user = localStorage.getItem("email");
+    const username = getUsername(user);
     const to = useRef();
     const subject = useRef();
     const message = useRef();
@@ -24,11 +29,12 @@ const Home = () => {
         const enteredSubject = subject.current.value;
         const enteredmessage = message.current.value;
         const email = {
-            enteredto,
-            enteredSubject,
-            enteredmessage
-        }
-        fetch(`https://mailbox2210-default-rtdb.firebaseio.com/emails/${username}.json`, {
+            receiver: enteredto,
+            subject: enteredSubject,
+            message: enteredmessage,
+            sender: username,
+        };
+        fetch(`https://mailbox2210-default-rtdb.firebaseio.com/${username}/sent.json`, {
             method: "POST",
             body: JSON.stringify(email)
         }).then((res) => {
@@ -40,7 +46,21 @@ const Home = () => {
             console.log(data, "MESSAGE SENT");
         }).catch((err) => {
             console.log(err);
-        })
+        });
+        const userReceived = getUsername(enteredto);
+        fetch(`https://mailbox2210-default-rtdb.firebaseio.com/${userReceived}/receiver.json`, {
+            method: "POST",
+            body: JSON.stringify({
+                receiver: userReceived,
+                subject: enteredSubject,
+                message: enteredmessage,
+                sender: username
+            })
+        }).then((res) => {
+            if (!res.ok) { throw new Error("Something went wrong!") }
+            else return res.json();
+        }).then((data) => { console.log("SAVED!!") })
+            .catch((err) => { console.log(err); })
     }
     return (
         <div className="home">
@@ -50,8 +70,11 @@ const Home = () => {
             <div className="container">
                 <div className="side_menu">
                     <ul>
-                        <li>Inbox</li>
-                        <li>Sent</li>
+                        <li>
+                            <NavLink to="/home" activeClassName="active_link">Compose</NavLink>
+                        </li>
+                        <li><NavLink to="/inbox" activeClassName="active_link">Inbox</NavLink></li>
+                        <li><NavLink to="/sent" activeClassName="active_link">Sent</NavLink></li>
                     </ul>
                 </div>
                 <div className="main_menu">
