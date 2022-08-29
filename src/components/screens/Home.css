@@ -2,19 +2,22 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
+    flex: 1;
+    min-height: 0px;
+}
+
+div.home {
+    line-height: 3rem;
 }
 
 @media screen and (max-width:425px) {
     div.home {
-        line-height: 3.0rem;
+        line-height: 2rem;
         font-size: calc(2.15vw + 30%);
     }
 }
 
-div.home {
-    line-height: 3.0rem;
-}
 
 .container .side_menu {
     width: 20%;
@@ -53,14 +56,17 @@ div.home {
 .container .main_menu {
     width: 85%;
     z-index: 10;
+    border: 1px solid #e1e1e1;
+    padding: 0px 3% 3%;
 }
 
 .container .main_menu textarea {
-    display: block;
-    width: 100%;
+    display: inline-block;
     overflow: hidden;
     resize: both;
-    min-height: 40px;
+    min-height: 100px;
+    min-width: 100%;
+    max-width: 100%;
     margin-bottom: 1rem;
 }
 

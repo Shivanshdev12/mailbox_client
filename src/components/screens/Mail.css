@@ -24,3 +24,18 @@ div.inbox_mail {
     text-decoration: none;
     color: #313131;
 }
+
+span.dot {
+    height: 8px;
+    width: 8px;
+    background-color: #105570;
+    border-radius: 50%;
+}
+
+span.delete_handler {
+    cursor: pointer;
+}
+
+span.delete_handler:hover {
+    color: #212121;
+}

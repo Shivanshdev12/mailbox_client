@@ -1,5 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { useRef } from "react";
+import { useDispatch } from "react-redux";
+import { mailActions } from "../../store/mailSlice";
 import Button from "../UI/Button";
 import "./Home.css";
 
@@ -20,6 +22,7 @@ function getUsername(user) {
 const Home = () => {
     const user = localStorage.getItem("email");
     const username = getUsername(user);
+    const dispatch = useDispatch();
     const to = useRef();
     const subject = useRef();
     const message = useRef();
@@ -33,6 +36,7 @@ const Home = () => {
             subject: enteredSubject,
             message: enteredmessage,
             sender: username,
+            isOpen: false
         };
         fetch(`https://mailbox2210-default-rtdb.firebaseio.com/${username}/sent.json`, {
             method: "POST",
@@ -43,24 +47,27 @@ const Home = () => {
             }
             else return res.json();
         }).then((data) => {
-            console.log(data, "MESSAGE SENT");
+            console.log("MESSAGE SENT");
         }).catch((err) => {
             console.log(err);
         });
         const userReceived = getUsername(enteredto);
+        const received_mail = {
+            receiver: userReceived,
+            subject: enteredSubject,
+            message: enteredmessage,
+            sender: username,
+            isOpen: false
+        }
         fetch(`https://mailbox2210-default-rtdb.firebaseio.com/${userReceived}/receiver.json`, {
             method: "POST",
-            body: JSON.stringify({
-                receiver: userReceived,
-                subject: enteredSubject,
-                message: enteredmessage,
-                sender: username
-            })
+            body: JSON.stringify(received_mail)
         }).then((res) => {
             if (!res.ok) { throw new Error("Something went wrong!") }
             else return res.json();
-        }).then((data) => { console.log("SAVED!!") })
-            .catch((err) => { console.log(err); })
+        }).then((data) => {
+            dispatch(mailActions.addMail(received_mail));
+        }).catch((err) => { console.log(err); });
     }
     return (
         <div className="home">
@@ -89,7 +96,7 @@ const Home = () => {
                     </form>
                 </div>
             </div>
-        </div>)
+        </div>);
 }
 
 export default Home;

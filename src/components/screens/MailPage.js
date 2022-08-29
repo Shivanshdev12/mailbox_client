@@ -1,5 +1,9 @@
-import { Fragment, useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 import { useParams } from "react-router";
+import { mailActions } from "../../store/mailSlice";
+import "./MailPage.css";
 
 function getUsername(user) {
     let username = user || " ";
@@ -17,28 +21,51 @@ function getUsername(user) {
 
 const MailPage = (props) => {
     const user = localStorage.getItem("email");
-    const inboxMails = [];
-    const [inbox, setInboxMails] = useState([]);
     const username = getUsername(user);
+    const dispatch = useDispatch();
+    const params = useParams();
+    const mail = useSelector(state => state.mail.mail);
     useEffect(() => {
         fetch(`https://mailbox2210-default-rtdb.firebaseio.com/${username}/receiver.json`).then((res) => {
             return res.json();
         }).then((data) => {
+            let inboxMails = [];
             for (let [key, value] of Object.entries(data)) {
                 inboxMails.push({ key, ...value });
             }
-            setInboxMails(inboxMails);
+            const selectedMail = inboxMails.find((i) => i.key === params.id);
+            dispatch(mailActions.replaceMail(selectedMail));
+            console.log(selectedMail);
         }).catch((err) => {
             console.log(err);
         })
     }, []);
-    const params = useParams();
-    const selectedMail = inbox.find((i) => i.key === params.id);
-    console.log(selectedMail);
+
     return (
-        <Fragment>
-            {console.log(params.id)}
-        </Fragment>);
+        <div className="home">
+            <div className="menu_bar">
+                <h3>Mailbox Client</h3>
+            </div>
+            <div className="container">
+                <div className="side_menu">
+                    <ul>
+                        <li className="active">
+                            <NavLink to="/home" activeClassName="active_link">Compose</NavLink>
+                        </li>
+                        <li><NavLink to="/inbox" activeClassName="active_link">Inbox</NavLink></li>
+                        <li><NavLink to="/sent" activeClassName="active_link">Sent</NavLink></li>
+                    </ul>
+                </div>
+                <div className="selected_mail">
+                    <h5>From : {mail.sender}</h5>
+                    <h4>Subject</h4>
+                    <h3>{mail.subject}</h3>
+                    <h4>Message</h4>
+                    <p>{mail.message}</p>
+                </div>
+            </div>
+        </div >
+    );
 }
 
 export default MailPage;
