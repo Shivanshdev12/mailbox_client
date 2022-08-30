@@ -34,8 +34,7 @@ const mailSlice = createSlice({
         },
         deleteMail(state, action) {
             const index = state.inboxItems.findIndex((item) => item.key === action.payload);
-            const updatedMail = state.inboxItems.splice(index, 1);
-            state.inboxItems = updatedMail;
+            state.inboxItems.splice(index, 1);
         }
     }
 });

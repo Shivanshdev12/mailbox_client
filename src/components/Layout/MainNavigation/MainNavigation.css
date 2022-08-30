@@ -1,5 +1,7 @@
 div.nav {
-    background-color: #2C3333;
+    display: inline-block;
+    height: 15vh;
+    background-color: #0f172a;
     color: #fff;
     padding: 18px 0px;
 }

@@ -8,7 +8,7 @@ import "./Mail.css";
 const Mail = (props) => {
     const dispatch = useDispatch();
     const openHandler = (key) => {
-        fetch(`https://mailbox2210-default-rtdb.firebaseio.com/${props.mail.receiver}/receiver/${props.mail.key}.json`, {
+        fetch(`https://mailbox2210-default-rtdb.firebaseio.com/${props.mail.receiver}/receiver/${key}.json`, {
             method: "PUT",
             body: JSON.stringify({
                 receiver: props.mail.receiver,
@@ -27,6 +27,7 @@ const Mail = (props) => {
         }).then((res) => {
             if (res.ok) return res.json();
         }).then((data) => {
+            window.location.reload();
             dispatch(mailActions.deleteMail(props.mail.key));
         }).catch((err) => {
             console.error(err);
@@ -42,7 +43,8 @@ const Mail = (props) => {
                     <p>{props.mail.subject}</p>
                 </NavLink>
             </div>
-        </Fragment>)
+        </Fragment>
+    );
 }
 
 export default Mail;

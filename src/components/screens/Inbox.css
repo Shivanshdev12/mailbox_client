@@ -4,7 +4,12 @@ div.inbox_menu {
     width: 100%;
     align-items: flex-start;
     justify-content: center;
-    background-color: #f1f1f1;
+    background-color: #e2e8f0;
     flex: 1;
     overflow: auto;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+span.not-opened {
+    color: #ef4444;
 }

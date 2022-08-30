@@ -55,7 +55,7 @@ const Inbox = () => {
                         <li className="active">
                             <NavLink to="/home" activeClassName="active_link">Compose</NavLink>
                         </li>
-                        <li><NavLink to="/inbox" activeClassName="active_link">Inbox {totalNotOpened} Unread</NavLink></li>
+                        <li><NavLink to="/inbox" activeClassName="active_link">Inbox <span className="not-opened">{totalNotOpened} Unread</span></NavLink></li>
                         <li><NavLink to="/sent" activeClassName="active_link">Sent</NavLink></li>
                     </ul>
                 </div>
