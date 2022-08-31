@@ -26,19 +26,36 @@ const MailPage = (props) => {
     const params = useParams();
     const mail = useSelector(state => state.mail.mail);
     useEffect(() => {
-        fetch(`https://mailbox2210-default-rtdb.firebaseio.com/${username}/receiver.json`).then((res) => {
-            return res.json();
-        }).then((data) => {
-            let inboxMails = [];
-            for (let [key, value] of Object.entries(data)) {
-                inboxMails.push({ key, ...value });
-            }
-            const selectedMail = inboxMails.find((i) => i.key === params.id);
-            dispatch(mailActions.replaceMail(selectedMail));
-            console.log(selectedMail);
-        }).catch((err) => {
-            console.log(err);
-        })
+        if (props.isSentBoxMail === false) {
+            fetch(`https://mailbox2210-default-rtdb.firebaseio.com/${username}/receiver.json`).then((res) => {
+                return res.json();
+            }).then((data) => {
+                let inboxMails = [];
+                for (let [key, value] of Object.entries(data)) {
+                    inboxMails.push({ key, ...value });
+                }
+                const selectedMail = inboxMails.find((i) => i.key === params.id);
+                dispatch(mailActions.replaceMail(selectedMail));
+                console.log(selectedMail);
+            }).catch((err) => {
+                console.log(err);
+            })
+        }
+        else {
+            fetch(`https://mailbox2210-default-rtdb.firebaseio.com/${username}/sent.json`).then((res) => {
+                return res.json();
+            }).then((data) => {
+                let inboxMails = [];
+                for (let [key, value] of Object.entries(data)) {
+                    inboxMails.push({ key, ...value });
+                }
+                const selectedMail = inboxMails.find((i) => i.key === params.id);
+                dispatch(mailActions.replaceMail(selectedMail));
+                console.log(selectedMail);
+            }).catch((err) => {
+                console.log(err);
+            })
+        }
     }, []);
 
     return (

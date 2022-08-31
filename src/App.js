@@ -3,6 +3,7 @@ import Signup from "./components/Auth/Signup";
 import Login from "./components/Auth/Login";
 import Home from "./components/screens/Home";
 import Inbox from "./components/screens/Inbox";
+import Sent from "./components/screens/Sent";
 import MailPage from "./components/screens/MailPage";
 import { Switch, Route, Redirect } from "react-router-dom";
 
@@ -18,7 +19,9 @@ function App() {
         {isToken === null && <Route path="/login" exact><Login /></Route>}
         {isToken !== null && <Route path="/home" exact><Home /></Route>}
         {isToken !== null && <Route path="/inbox" exact><Inbox /></Route>}
-        {isToken !== null && <Route path="/inbox/:id" exact><MailPage /></Route>}
+        {isToken !== null && <Route path="/inbox/:id" exact><MailPage isSentBoxMail={false} /></Route>}
+        {isToken !== null && <Route path="/sent" exact><Sent /></Route>}
+        {isToken !== null && <Route path="/sent/:id" exact><MailPage isSentBoxMail={true} /></Route>}
         {<Route path="*">
           <Redirect to="/login" />
         </Route>}

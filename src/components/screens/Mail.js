@@ -22,16 +22,31 @@ const Mail = (props) => {
         })
     }
     const deleteHandler = () => {
-        fetch(`https://mailbox2210-default-rtdb.firebaseio.com/${props.mail.receiver}/receiver/${props.mail.key}.json`, {
-            method: "DELETE"
-        }).then((res) => {
-            if (res.ok) return res.json();
-        }).then((data) => {
-            window.location.reload();
-            dispatch(mailActions.deleteMail(props.mail.key));
-        }).catch((err) => {
-            console.error(err);
-        })
+        if (!props.isSentBox) {
+            //here mail.receiver because props contain those mails only were we are receiver
+            fetch(`https://mailbox2210-default-rtdb.firebaseio.com/${props.mail.receiver}/receiver/${props.mail.key}.json`, {
+                method: "DELETE"
+            }).then((res) => {
+                if (res.ok) return res.json();
+            }).then((data) => {
+                window.location.reload();
+                dispatch(mailActions.deleteMail(props.mail.key));
+            }).catch((err) => {
+                console.error(err);
+            });
+        }
+        else {
+            fetch(`https://mailbox2210-default-rtdb.firebaseio.com/${props.mail.sender}/sent/${props.mail.key}.json`, {
+                method: "DELETE"
+            }).then((res) => {
+                if (res.ok) return res.json();
+            }).then((data) => {
+                window.location.reload();
+                dispatch(mailActions.deleteMail(props.mail.key));
+            }).catch((err) => {
+                console.error(err);
+            });
+        }
     }
     return (
         <Fragment>
@@ -39,9 +54,12 @@ const Mail = (props) => {
                 <span onClick={deleteHandler} className="delete_handler"><AiOutlineDelete /></span>
                 <span><AiOutlineStar /></span>
                 {!props.mail.isOpen && <span className="dot"></span>}
-                <NavLink state={props.mail} to={`/inbox/${props.mail.key}`} onClick={openHandler.bind(null, props.mail.key)}>
+                {props.isSentBox === false && <NavLink state={props.mail} to={`/inbox/${props.mail.key}`} onClick={openHandler.bind(null, props.mail.key)}>
                     <p>{props.mail.subject}</p>
-                </NavLink>
+                </NavLink>}
+                {props.isSentBox === true && <NavLink state={props.mail} to={`/sent/${props.mail.key}`}>
+                    <p>{props.mail.subject}</p>
+                </NavLink>}
             </div>
         </Fragment>
     );
