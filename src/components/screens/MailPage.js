@@ -3,21 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { useParams } from "react-router";
 import { mailActions } from "../../store/mailSlice";
+import { getUsername } from "../../helper";
 import "./MailPage.css";
-
-function getUsername(user) {
-    let username = user || " ";
-    let t = "";
-    for (let i = 0; i < username.length; i++) {
-        if (username[i] === '.' || username[i] === '@') {
-            continue;
-        }
-        else {
-            t += username[i];
-        }
-    }
-    return t;
-}
 
 const MailPage = (props) => {
     const user = localStorage.getItem("email");
@@ -36,7 +23,6 @@ const MailPage = (props) => {
                 }
                 const selectedMail = inboxMails.find((i) => i.key === params.id);
                 dispatch(mailActions.replaceMail(selectedMail));
-                console.log(selectedMail);
             }).catch((err) => {
                 console.log(err);
             })
@@ -51,7 +37,6 @@ const MailPage = (props) => {
                 }
                 const selectedMail = inboxMails.find((i) => i.key === params.id);
                 dispatch(mailActions.replaceMail(selectedMail));
-                console.log(selectedMail);
             }).catch((err) => {
                 console.log(err);
             })

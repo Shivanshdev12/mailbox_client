@@ -2,30 +2,20 @@ import { NavLink } from "react-router-dom";
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { mailActions } from "../../store/mailSlice";
+import { getUsername } from "../../helper";
 import Button from "../UI/Button";
 import "./Home.css";
 
-function getUsername(user) {
-    let username = user || " ";
-    let t = "";
-    for (let i = 0; i < username.length; i++) {
-        if (username[i] === '.' || username[i] === '@') {
-            continue;
-        }
-        else {
-            t += username[i];
-        }
-    }
-    return t;
-}
-
 const Home = () => {
-    const user = localStorage.getItem("email");
-    const username = getUsername(user);
-    const dispatch = useDispatch();
     const to = useRef();
     const subject = useRef();
     const message = useRef();
+
+    const dispatch = useDispatch();
+
+    const user = localStorage.getItem("email");
+    const username = getUsername(user);
+
     const submitHandler = (e) => {
         e.preventDefault();
         const enteredto = to.current.value;
@@ -49,7 +39,7 @@ const Home = () => {
         }).then((data) => {
             console.log("MESSAGE SENT");
         }).catch((err) => {
-            console.log(err);
+            console.error(err.message);
         });
         const userReceived = getUsername(enteredto);
         const received_mail = {
@@ -72,7 +62,7 @@ const Home = () => {
     return (
         <div className="home">
             <div className="menu_bar">
-                <h3>Mailbox Client</h3>
+                <h3>Mailbox Client 📧</h3>
             </div>
             <div className="container">
                 <div className="side_menu">
@@ -87,9 +77,9 @@ const Home = () => {
                 <div className="main_menu">
                     <form className="mailbox" onSubmit={submitHandler}>
                         <label htmlFor="email">To:</label>
-                        <input type="email" name="email" id="email" ref={to} />
+                        <input type="email" name="email" id="email" placeholder="Enter receiver's email" ref={to} />
                         <label htmlFor="Subject">Subject:</label>
-                        <input type="text" name="Subject" id="Subject" ref={subject} />
+                        <input type="text" name="Subject" id="Subject" ref={subject} placeholder="Enter sender's email" />
                         <label htmlFor="Message">Message:</label>
                         <textarea type="text" name="Message" id="Message" ref={message} />
                         <Button className="btn-auth">Send Email</Button>

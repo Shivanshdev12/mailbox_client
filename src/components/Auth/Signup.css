@@ -55,3 +55,9 @@ div.signup {
 .btn-auth:not([disabled]):hover {
     box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(239, 71, 101, 0.5), .125rem .125rem 1rem rgba(255, 154, 90, 0.5);
 }
+
+@media screen and (max-width:425px) {
+    .btn-auth {
+        font-size: calc(2.15vw + 30%);
+    }
+}

@@ -6,6 +6,18 @@ div.nav {
     padding: 18px 0px;
 }
 
+@media screen and (max-width:425px) {
+    div.nav {
+        font-size: calc(2.15vw + 30%);
+    }
+}
+
+@media screen and (max-width:425px) {
+    div.nav ul button {
+        font-size: calc(2.15vw + 30%);
+    }
+}
+
 .nav ul {
     list-style: none;
 }

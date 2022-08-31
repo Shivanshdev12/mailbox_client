@@ -53,7 +53,7 @@ const Mail = (props) => {
             <div className="inbox_mail">
                 <span onClick={deleteHandler} className="delete_handler"><AiOutlineDelete /></span>
                 <span><AiOutlineStar /></span>
-                {!props.mail.isOpen && <span className="dot"></span>}
+                {!props.mail.isOpen && props.isSentBox === false && <span className="dot"></span>}
                 {props.isSentBox === false && <NavLink state={props.mail} to={`/inbox/${props.mail.key}`} onClick={openHandler.bind(null, props.mail.key)}>
                     <p>{props.mail.subject}</p>
                 </NavLink>}

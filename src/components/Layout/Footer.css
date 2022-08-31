@@ -14,3 +14,9 @@
 .text-center span {
     margin-left: 10px;
 }
+
+@media screen and (max-width:425px) {
+    .footer {
+        font-size: calc(2.15vw + 30%);
+    }
+}

@@ -1,27 +1,13 @@
-import { NavLink } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { NavLink } from "react-router-dom";
+import { mailActions } from "../../store/mailSlice";
+import { getUsername } from "../../helper";
 import Mail from "./Mail";
 import "./Inbox.css";
-import { mailActions } from "../../store/mailSlice";
-
-
-function getUsername(user) {
-    let username = user || " ";
-    let t = "";
-    for (let i = 0; i < username.length; i++) {
-        if (username[i] === '.' || username[i] === '@') {
-            continue;
-        }
-        else {
-            t += username[i];
-        }
-    }
-    return t;
-}
 
 const Inbox = () => {
-    let mails = [], sentMails = [];
+    let mails = [];
     const [inboxMail, setInboxMail] = useState([]);
     const user = localStorage.getItem("email");
     const username = getUsername(user);
