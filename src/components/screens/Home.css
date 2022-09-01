@@ -5,10 +5,12 @@
     align-items: flex-start;
     flex: 1;
     min-height: 0px;
+    height: 100%;
 }
 
 div.home {
     line-height: 3rem;
+    height: 80vh;
 }
 
 @media screen and (max-width:425px) {
@@ -20,7 +22,6 @@ div.home {
 
 
 .container .side_menu {
-    padding: 5px;
     width: 20%;
 }
 
@@ -50,14 +51,15 @@ div.home {
 .home .menu_bar {
     text-align: center;
     background: #94a3b8;
-    border-bottom: 1px solid #313131;
 }
 
 
 .container .main_menu {
+    display: inline-block;
+    border-left: 1px solid #94A3B8;
+    height: 100%;
     width: 85%;
     z-index: 10;
-    border: 1px solid #e1e1e1;
     padding: 0px 3% 3%;
 }
 

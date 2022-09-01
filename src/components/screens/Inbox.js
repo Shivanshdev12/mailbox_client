@@ -7,28 +7,31 @@ import Mail from "./Mail";
 import "./Inbox.css";
 
 const Inbox = () => {
-    let mails = [];
     const [inboxMail, setInboxMail] = useState([]);
     const user = localStorage.getItem("email");
     const username = getUsername(user);
     const dispatch = useDispatch();
     const totalNotOpened = useSelector(state => state.mail.totalNotOpened);
     useEffect(() => {
-        fetch(`https://mailbox2210-default-rtdb.firebaseio.com/${username}/receiver.json`).then((res) => {
-            return res.json();
-        }).then((data) => {
-            let notOpened = 0;
-            for (let [key, value] of Object.entries(data)) {
-                mails.push({ key, ...value });
-                if (value.isOpen === false) {
-                    notOpened += 1;
+        const setIntervalId = setInterval(() => {
+            let mails = [];
+            fetch(`https://mailbox2210-default-rtdb.firebaseio.com/${username}/receiver.json`).then((res) => {
+                return res.json();
+            }).then((data) => {
+                let notOpened = 0;
+                for (let [key, value] of Object.entries(data)) {
+                    mails.push({ key, ...value });
+                    if (value.isOpen === false) {
+                        notOpened += 1;
+                    }
                 }
-            }
-            setInboxMail(mails);
-            dispatch(mailActions.countNotOpened(notOpened));
-        }).catch((err) => {
-            console.log(err);
-        });
+                setInboxMail(mails);
+                dispatch(mailActions.countNotOpened(notOpened));
+            }).catch((err) => {
+                console.log(err);
+            });
+        }, 2000);
+        return () => clearInterval(setIntervalId);
     }, [dispatch]);
     return (
         <div className="home">
