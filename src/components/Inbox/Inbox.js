@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { mailActions } from "../../store/mailSlice";
 import { getUsername } from "../../helper";
-import Mail from "./Mail";
+import Mail from "../Mail/Mail";
 import "./Inbox.css";
 
 const Inbox = () => {

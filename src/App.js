@@ -1,10 +1,10 @@
 import Layout from "./components/Layout/Layout";
 import Signup from "./components/Auth/Signup";
 import Login from "./components/Auth/Login";
-import Home from "./components/screens/Home";
-import Inbox from "./components/screens/Inbox";
-import Sent from "./components/screens/Sent";
-import MailPage from "./components/screens/MailPage";
+import Home from "./components/Home/Home";
+import Inbox from "./components/Inbox/Inbox";
+import Sent from "./components/Sent";
+import MailPage from "./components/MailPage/MailPage";
 import { Switch, Route, Redirect } from "react-router-dom";
 
 function App() {

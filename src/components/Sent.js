@@ -1,9 +1,9 @@
 import { NavLink } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getUsername } from "../../helper";
-import Mail from "./Mail";
-import "./Inbox.css";
+import { getUsername } from "../helper";
+import Mail from "./Mail/Mail";
+import "./Inbox/Inbox.css";
 
 const Sent = () => {
     let mails = [];
