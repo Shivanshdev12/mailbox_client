@@ -13,6 +13,7 @@ const Inbox = () => {
     const dispatch = useDispatch();
     const totalNotOpened = useSelector(state => state.mail.totalNotOpened);
     useEffect(() => {
+        console.log("called");
         const setIntervalId = setInterval(() => {
             let mails = [];
             fetch(`https://mailbox2210-default-rtdb.firebaseio.com/${username}/receiver.json`).then((res) => {
@@ -33,6 +34,16 @@ const Inbox = () => {
         }, 2000);
         return () => clearInterval(setIntervalId);
     }, [dispatch]);
+    const deleteHandler = (key) => {
+        fetch(`https://mailbox2210-default-rtdb.firebaseio.com/${username}/receiver/${key}.json`, {
+            method: "DELETE",
+        }).then((res) => {
+            const inboxMailCopy = [...inboxMail]
+            const index = inboxMailCopy.findIndex((item) => item.key === key);
+            inboxMailCopy.splice(index, 1)
+            setInboxMail(inboxMailCopy);
+        })
+    }
     return (
         <div className="home">
             <div className="menu_bar">
@@ -50,7 +61,7 @@ const Inbox = () => {
                 </div>
                 <div className="inbox_menu">
                     {inboxMail.map((mail) => {
-                        return <Mail key={mail.key} mail={mail} isSentBox={false} />
+                        return <Mail key={mail.key} deleteItem={deleteHandler} mail={mail} isSentBox={false} />
                     })}
                 </div>
             </div>

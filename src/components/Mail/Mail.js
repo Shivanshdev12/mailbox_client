@@ -22,31 +22,7 @@ const Mail = (props) => {
         })
     }
     const deleteHandler = () => {
-        if (!props.isSentBox) {
-            //here mail.receiver because props contain those mails only were we are receiver
-            fetch(`https://mailbox2210-default-rtdb.firebaseio.com/${props.mail.receiver}/receiver/${props.mail.key}.json`, {
-                method: "DELETE"
-            }).then((res) => {
-                if (res.ok) return res.json();
-            }).then((data) => {
-                window.location.reload();
-                dispatch(mailActions.deleteMail(props.mail.key));
-            }).catch((err) => {
-                console.error(err);
-            });
-        }
-        else {
-            fetch(`https://mailbox2210-default-rtdb.firebaseio.com/${props.mail.sender}/sent/${props.mail.key}.json`, {
-                method: "DELETE"
-            }).then((res) => {
-                if (res.ok) return res.json();
-            }).then((data) => {
-                window.location.reload();
-                dispatch(mailActions.deleteMail(props.mail.key));
-            }).catch((err) => {
-                console.error(err);
-            });
-        }
+        props.deleteItem(props.mail.key);
     }
     return (
         <Fragment>

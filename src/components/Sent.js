@@ -1,17 +1,15 @@
 import { NavLink } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { getUsername } from "../helper";
 import Mail from "./Mail/Mail";
 import "./Inbox/Inbox.css";
 
 const Sent = () => {
-    let mails = [];
     const [inboxMail, setInboxMail] = useState([]);
     const user = localStorage.getItem("email");
     const username = getUsername(user);
-    const dispatch = useDispatch();
     useEffect(() => {
+        let mails = [];
         fetch(`https://mailbox2210-default-rtdb.firebaseio.com/${username}/sent.json`).then((res) => {
             return res.json();
         }).then((data) => {
@@ -22,7 +20,18 @@ const Sent = () => {
         }).catch((err) => {
             console.log(err);
         });
-    }, [dispatch]);
+        console.log("getting called");
+    }, []);
+    const deleteHandler = (key) => {
+        fetch(`https://mailbox2210-default-rtdb.firebaseio.com/${username}/sent/${key}.json`, {
+            method: "DELETE",
+        }).then((res) => {
+            const inboxMailCopy = [...inboxMail]
+            const index = inboxMailCopy.findIndex((item) => item.key === key);
+            inboxMailCopy.splice(index, 1)
+            setInboxMail(inboxMailCopy);
+        })
+    }
     return (
         <div className="home">
             <div className="menu_bar">
@@ -40,7 +49,7 @@ const Sent = () => {
                 </div>
                 <div className="inbox_menu">
                     {inboxMail.map((mail) => {
-                        return <Mail key={mail.key} mail={mail} isSentBox={true} />
+                        return <Mail key={mail.key} mail={mail} deleteItem={deleteHandler} isSentBox={true} />
                     })}
                 </div>
             </div>
