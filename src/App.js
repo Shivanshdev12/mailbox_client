@@ -6,25 +6,57 @@ import Inbox from "./components/Inbox/Inbox";
 import Sent from "./components/Sent";
 import MailPage from "./components/MailPage/MailPage";
 import { Switch, Route, Redirect } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const isToken = localStorage.getItem("token");
   return (
     <Layout>
+      <ToastContainer />
       <Switch>
         <Route path="/" exact>
           <Redirect to="/home" />
         </Route>
-        {isToken === null && <Route path="/signup" exact><Signup /></Route>}
-        {isToken === null && <Route path="/login" exact><Login /></Route>}
-        {isToken !== null && <Route path="/home" exact><Home /></Route>}
-        {isToken !== null && <Route path="/inbox" exact><Inbox /></Route>}
-        {isToken !== null && <Route path="/inbox/:id" exact><MailPage isSentBoxMail={false} /></Route>}
-        {isToken !== null && <Route path="/sent" exact><Sent /></Route>}
-        {isToken !== null && <Route path="/sent/:id" exact><MailPage isSentBoxMail={true} /></Route>}
-        {<Route path="*">
-          <Redirect to="/login" />
-        </Route>}
+        {isToken === null && (
+          <Route path="/signup" exact>
+            <Signup />
+          </Route>
+        )}
+        {isToken === null && (
+          <Route path="/login" exact>
+            <Login />
+          </Route>
+        )}
+        {isToken !== null && (
+          <Route path="/home" exact>
+            <Home />
+          </Route>
+        )}
+        {isToken !== null && (
+          <Route path="/inbox" exact>
+            <Inbox />
+          </Route>
+        )}
+        {isToken !== null && (
+          <Route path="/inbox/:id" exact>
+            <MailPage isSentBoxMail={false} />
+          </Route>
+        )}
+        {isToken !== null && (
+          <Route path="/sent" exact>
+            <Sent />
+          </Route>
+        )}
+        {isToken !== null && (
+          <Route path="/sent/:id" exact>
+            <MailPage isSentBoxMail={true} />
+          </Route>
+        )}
+        {
+          <Route path="*">
+            <Redirect to="/login" />
+          </Route>
+        }
       </Switch>
     </Layout>
   );
